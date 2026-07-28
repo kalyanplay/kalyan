@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>GOGAMI</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+            user-select: none;
+            border: none;
+            outline: none;
+        }
+
+        body {
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background: #025922;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .grecaptcha-badge {
+            visibility: hidden !important;
+            opacity: 0 !important;
+            pointer-events: none !important;
+        }
+
+        #splashScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #025922;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .splash-logo {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 30px;
+        }
+
+        .loader-bar {
+            width: 120px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .loader-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #ffffff;
+            border-radius: 10px;
+            animation: loading 1.2s infinite linear;
+        }
+
+        @keyframes loading {
+            0% { left: -100%; }
+            50% { left: 0%; }
+            100% { left: 100%; }
+        }
+
+        .app-wrapper {
+            width: 100%;
+            max-width: 360px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+            margin-top: 20px;
+        }
+
+        .main-logo {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            margin-bottom: 20px;
+        }
+
+        .screen { 
+            width: 100%; 
+            display: flex; 
+            flex-direction: column; 
+        }
+
+        .hidden { 
+            display: none !important; 
+        }
+
+        .input-field {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 16px 18px;
+            width: 100%;
+            color: #0f172a;
+            font-size: 16px;
+            margin-bottom: 16px;
+            text-align: center;
+            font-weight: 600;
+            letter-spacing: 0.8px;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+            -webkit-user-select: text;
+            user-select: text;
+        }
+
+        .input-field:focus {
+            border-color: #025922;
+        }
+
+        .input-field::placeholder { 
+            color: #94a3b8; 
+            font-weight: 400;
+            letter-spacing: 0px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 16px;
+            background: #013b15;
+            border-radius: 14px;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+            transition: background 0.2s ease, transform 0.1s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn:active { 
+            background: #00260d;
+            transform: scale(0.98); 
+        }
+
+        .btn:disabled {
+            background: #cbd5e1;
+            color: #64748b;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        .banner-container {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .feature-banner {
+            width: 100%;
+            max-height: 280px;
+            object-fit: contain;
+            border-radius: 16px;
+        }
+
+        .thank-you-text {
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+            margin-top: 8px;
+            text-align: center;
+            opacity: 0.9;
+        }
+
+        .welcome-text { 
+            color: #ffffff; 
+            font-size: 14px; 
+            margin-bottom: 16px; 
+            text-align: center; 
+            font-weight: 500; 
+        }
+
+        .timer { 
+            color: #fef08a; 
+            font-size: 13px; 
+            font-weight: 700; 
+            margin-bottom: 16px; 
+            text-align: center; 
+            font-family: monospace; 
+            letter-spacing: 0.5px;
+        }
+
+        .error-text { 
+            color: #fca5a5; 
+            font-size: 12px; 
+            text-align: center; 
+            margin-top: 12px; 
+            font-weight: 600; 
+            min-height: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Android App Style Splash Screen -->
+    <div id="splashScreen">
+        <img src="https://i.imgur.com/DEFyMFt.png" alt="Logo" class="splash-logo">
+        <div class="loader-bar"></div>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="app-wrapper">
+        <img src="https://i.imgur.com/DEFyMFt.png" alt="Logo" class="main-logo">
+        
+        <!-- Phone Number Input Screen -->
+        <div id="phoneScreen" class="screen">
+            <input type="tel" id="phoneNumber" class="input-field" placeholder="Enter Mobile Number" maxlength="10" inputmode="numeric" oninput="this.value = this.value.replace(/\D/g,'')">
+            <button class="btn" id="sendOtpBtn">Login with OTP</button>
+            <div id="phoneError" class="error-text"></div>
+            
+            <div class="banner-container">
+                <img src="https://i.imgur.com/0iKFUDW.png" alt="Banner" class="feature-banner">
+                <div class="thank-you-text">WELCOME TO THE GOGAMI FAMILY</div>
+            </div>
+        </div>
+
+        <!-- OTP Verification Screen -->
+        <div id="otpScreen" class="screen hidden">
+            <div class="welcome-text">Enter 6-digit OTP sent to your phone</div>
+            <div class="timer" id="timer">Seconds Remaining: 60</div>
+            <input type="text" id="otpCode" class="input-field" placeholder="Enter OTP" maxlength="6" inputmode="numeric" autocomplete="one-time-code" oninput="this.value = this.value.replace(/\D/g,'')">
+            <button class="btn" id="verifyOtpBtn">VERIFY OTP</button>
+            <div id="otpError" class="error-text"></div>
+            
+            <div class="banner-container">
+                <img src="https://i.imgur.com/0iKFUDW.png" alt="Banner" class="feature-banner">
+                <div class="thank-you-text">THANK YOU FOR CONNECTING US</div>
+            </div>
+        </div>
+
+        <!-- Profile Setup Screen -->
+        <div id="registerScreen" class="screen hidden">
+            <div class="welcome-text">Complete Your Profile</div>
+            <input type="text" id="regName" class="input-field" placeholder="Full Name">
+            <button class="btn" id="registerBtn">Create Account & Login</button>
+            <div id="regError" class="error-text"></div>
+            
+            <div class="banner-container">
+                <img src="https://i.imgur.com/0iKFUDW.png" alt="Banner" class="feature-banner">
+                <div class="thank-you-text">WELCOME TO THE GOGAMI FAMILY</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyDLZdlEN9SEb6Z4dsuuMGsRNIzVBMwky_c",
+            authDomain: "gogami-877be.firebaseapp.com",
+            databaseURL: "https://gogami-877be-default-rtdb.firebaseio.com",
+            projectId: "gogami-877be",
+            storageBucket: "gogami-877be.firebasestorage.app",
+            messagingSenderId: "220921167245",
+            appId: "1:220921167245:web:3ccc8b424e5bc927c291c4",
+            measurementId: "G-2Q572T3D8J"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+
+        let ac = null;
+        let isDataLoaded = false;
+
+        function hideSplashScreen() {
+            if (!isDataLoaded) return;
+            const splash = document.getElementById('splashScreen');
+            if (splash && splash.style.opacity !== '0') {
+                splash.style.opacity = '0';
+                setTimeout(() => {
+                    splash.style.visibility = 'hidden';
+                }, 300);
+            }
+        }
+        
+        let confirmationResult = null, currentPhone = null, countdown = 0, timerInterval = null, recaptchaVerifier = null;
+        
+        function showScreen(screen) {
+            document.getElementById('phoneScreen').className = 'screen hidden';
+            document.getElementById('otpScreen').className = 'screen hidden';
+            document.getElementById('registerScreen').className = 'screen hidden';
+            screen.className = 'screen';
+        }
+        
+        function showError(elementId, message) { 
+            const el = document.getElementById(elementId); 
+            if (el) { 
+                el.innerText = message; 
+                setTimeout(() => el.innerText = '', 4000); 
+            } 
+        }
+        
+        function initRecaptcha() { 
+            if (!recaptchaVerifier) { 
+                const container = document.createElement('div'); 
+                container.id = 'recaptcha-container'; 
+                container.style.position = 'absolute'; 
+                container.style.left = '-9999px'; 
+                document.body.appendChild(container); 
+                recaptchaVerifier = new firebase.auth.RecaptchaVerifier('recaptcha-container', { size: 'invisible' }); 
+            } 
+            return recaptchaVerifier; 
+        }
+        
+        function startTimer(seconds, timerElementId) { 
+            countdown = seconds; 
+            if (timerInterval) clearInterval(timerInterval); 
+            timerInterval = setInterval(() => { 
+                if (countdown <= 1) clearInterval(timerInterval); 
+                const timerEl = document.getElementById(timerElementId); 
+                if (timerEl && countdown > 0) timerEl.innerText = `Seconds Remaining: ${countdown}`; 
+                countdown--; 
+            }, 1000); 
+        }
+
+        function listenForAutoOTP() {
+            if ('OTPCredential' in window) {
+                ac = new AbortController();
+                navigator.credentials.get({
+                    otp: { transport: ['sms'] },
+                    signal: ac.signal
+                }).then(otp => {
+                    if (otp && otp.code) {
+                        const otpInput = document.getElementById('otpCode');
+                        if(otpInput) {
+                            otpInput.value = otp.code;
+                            otpInput.dispatchEvent(new Event('input', { bubbles: true }));
+                            otpInput.dispatchEvent(new Event('change', { bubbles: true }));
+                            document.getElementById('verifyOtpBtn').click();
+                        }
+                    }
+                }).catch(err => {
+                    console.log('WebOTP Error/Cancelled:', err);
+                });
+            }
+        }
+        
+        document.getElementById('sendOtpBtn').onclick = function() {
+            const phone = document.getElementById('phoneNumber').value.replace(/\D/g, '');
+            if (!phone || phone.length !== 10) { 
+                showError('phoneError', 'Enter a valid 10-digit mobile number'); 
+                return; 
+            }
+            
+            this.disabled = true;
+            this.innerText = 'Sending OTP...';
+            
+            currentPhone = '+91' + phone;
+            sendVerificationPhone(currentPhone, this, 'phoneError');
+        };
+
+        function sendVerificationPhone(phoneNumber, btnElement, errorId) {
+            const verifier = initRecaptcha();
+            auth.signInWithPhoneNumber(phoneNumber, verifier).then(confirmation => { 
+                confirmationResult = confirmation; 
+                showScreen(document.getElementById('otpScreen')); 
+                startTimer(60, 'timer'); 
+                btnElement.disabled = false; 
+                btnElement.innerText = 'Login with OTP'; 
+                
+                listenForAutoOTP();
+            }).catch(error => { 
+                showError(errorId, error.message || 'Failed to send OTP. Try again.'); 
+                btnElement.disabled = false; 
+                btnElement.innerText = 'Login with OTP'; 
+            });
+        }
+        
+        // Helper function to create/update session on successful login
+        async function createAndSaveSession(userId) {
+            const sessionId = 'session_' + Math.random().toString(36).substring(2) + Date.now();
+            localStorage.setItem('current_session_id', sessionId);
+            await db.collection('users').doc(userId).set({
+                activeSessionId: sessionId
+            }, { merge: true });
+        }
+
+        document.getElementById('verifyOtpBtn').onclick = function() {
+            const code = document.getElementById('otpCode').value;
+            if (!code || code.length !== 6) { 
+                showError('otpError', 'Enter 6-digit OTP'); 
+                return; 
+            }
+            const btn = this; 
+            btn.disabled = true; 
+            btn.innerText = 'Verifying...';
+
+            if (ac) ac.abort();
+            
+            confirmationResult.confirm(code).then(async result => { 
+                const user = result.user; 
+                try {
+                    const doc = await db.collection('users').doc(user.uid).get();
+                    if (doc.exists) {
+                        if (doc.data().blocked === true) {
+                            alert('🚫 Your account has been blocked by Admin.');
+                            await auth.signOut();
+                            showScreen(document.getElementById('phoneScreen'));
+                            btn.disabled = false;
+                            btn.innerText = 'VERIFY OTP';
+                            return;
+                        }
+                        // Create session before heading to dashboard
+                        await createAndSaveSession(user.uid);
+                        window.location.href = 'dashboard.html';
+                    } else {
+                        showScreen(document.getElementById('registerScreen'));
+                        btn.disabled = false; 
+                        btn.innerText = 'VERIFY OTP';
+                    }
+                } catch(e) { 
+                    showScreen(document.getElementById('registerScreen')); 
+                    btn.disabled = false; 
+                } 
+            }).catch(() => { 
+                showError('otpError', 'Invalid OTP. Please check and try again.'); 
+                btn.disabled = false; 
+                btn.innerText = 'VERIFY OTP';
+            });
+        };
+        
+        document.getElementById('registerBtn').onclick = async function() {
+            const name = document.getElementById('regName').value.trim();
+            if (!name) { 
+                showError('regError', 'Enter your name'); 
+                return; 
+            } 
+            
+            const user = auth.currentUser; 
+            if (!user) { 
+                showError('regError', 'Session expired. Try again.'); 
+                return; 
+            }
+            const btn = this; 
+            btn.disabled = true; 
+            btn.innerText = 'Creating Account...';
+            
+            try {
+                // Create user doc and session ID together
+                const sessionId = 'session_' + Math.random().toString(36).substring(2) + Date.now();
+                localStorage.setItem('current_session_id', sessionId);
+
+                await db.collection('users').doc(user.uid).set({ 
+                    uid: user.uid, 
+                    phone: user.phoneNumber, 
+                    name: name, 
+                    balance: 0, 
+                    blocked: false,
+                    role: 'user', 
+                    activeSessionId: sessionId,
+                    createdAt: new Date() 
+                });
+                window.location.href = 'dashboard.html'; 
+            } catch(error) { 
+                showError('regError', error.message); 
+                btn.disabled = false; 
+                btn.innerText = 'Create Account & Login'; 
+            }
+        };
+
+        auth.onAuthStateChanged(async user => { 
+            if (user) { 
+                try {
+                    const doc = await db.collection('users').doc(user.uid).get();
+                    isDataLoaded = true;
+                    if (doc.exists) { 
+                        if (doc.data().blocked === true) {
+                            alert('🚫 Your account has been blocked by Admin.');
+                            await auth.signOut();
+                            showScreen(document.getElementById('phoneScreen'));
+                            hideSplashScreen();
+                            return;
+                        }
+                        // Agar already logged in hai aur direct index.html khola hai toh session verify karke dashboard bhej do
+                        if (!localStorage.getItem('current_session_id')) {
+                            await createAndSaveSession(user.uid);
+                        }
+                        window.location.href = 'dashboard.html';
+                    } else { 
+                        showScreen(document.getElementById('registerScreen')); 
+                        hideSplashScreen();
+                    } 
+                } catch(e) {
+                    isDataLoaded = true;
+                    showScreen(document.getElementById('phoneScreen'));
+                    hideSplashScreen();
+                } 
+            } else { 
+                isDataLoaded = true;
+                showScreen(document.getElementById('phoneScreen')); 
+                hideSplashScreen();
+            } 
+        });
+
+        setTimeout(() => {
+            isDataLoaded = true;
+            hideSplashScreen();
+        }, 3000);
+    </script>
+</body>
+</html>
