@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>KALYAN - Transactions</title>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <style>
+        * { 
+            margin: 0; 
+            padding: 0; 
+            box-sizing: border-box; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            -webkit-tap-highlight-color: transparent;
+            -webkit-user-select: none;
+            user-select: none;
+            outline: none;
+            border: none;
+        }
+
+        body { 
+            background: #f0f6ff; 
+            color: #1e293b; 
+            padding-bottom: 90px; 
+            min-height: 100vh;
+        }
+
+        .app-container { 
+            max-width: 480px; 
+            margin: 0 auto; 
+            background: #f0f6ff; 
+            min-height: 100vh; 
+            position: relative; 
+        }
+
+        /* Full Screen Android App Style Splash Screen */
+        #splashScreen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: #0284c7;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .splash-logo {
+            width: 150px;
+            height: 150px;
+            object-fit: contain;
+            margin-bottom: 30px;
+        }
+
+        .loader-bar {
+            width: 120px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .loader-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #fffbeb;
+            border-radius: 10px;
+            animation: loading 1.2s infinite linear;
+        }
+
+        @keyframes loading {
+            0% { left: -100%; }
+            50% { left: 0%; }
+            100% { left: 100%; }
+        }
+
+        /* Top Header Bar */
+        .header { 
+            background: #0284c7; 
+            padding: 12px 16px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .back-btn { 
+            background: none; 
+            border: none; 
+            font-size: 22px; 
+            color: #ffffff; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+        }
+
+        .header-logo-img {
+            height: 28px;
+            object-fit: contain;
+        }
+
+        .title-text {
+            font-size: 14px;
+            font-weight: 800;
+            color: #ffffff;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* History Cards */
+        .history-list {
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .history-item { 
+            background: #ffffff; 
+            padding: 14px; 
+            border-radius: 14px; 
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border: 1px solid #cbd5e1;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        }
+
+        .history-header { 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center; 
+            border-bottom: 1px solid #f1f5f9;
+            padding-bottom: 8px;
+        }
+
+        .history-id { 
+            color: #0284c7; 
+            font-size: 11px; 
+            font-family: monospace; 
+            font-weight: 700;
+        }
+
+        .history-amount { 
+            font-size: 16px; 
+            font-weight: 800; 
+        }
+
+        .amount-credit { color: #059669; }
+        .amount-debit { color: #dc2626; }
+
+        .history-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .history-type { 
+            font-size: 10px; 
+            padding: 3px 8px; 
+            border-radius: 6px; 
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .type-deposit { background: rgba(5, 150, 105, 0.15); color: #059669; }
+        .type-withdraw { background: rgba(220, 38, 38, 0.15); color: #dc2626; }
+
+        .status-text {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+        }
+
+        .status-completed, .status-approved { color: #059669; }
+        .status-rejected { color: #dc2626; }
+        .status-pending { color: #d97706; }
+
+        .history-date { 
+            color: #64748b; 
+            font-size: 10px; 
+            font-weight: 500;
+            text-align: right;
+        }
+
+        .no-data { 
+            text-align: center; 
+            color: #64748b; 
+            padding: 60px 20px; 
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        /* Bottom Fixed Navigation */
+        .bottom-nav { 
+            position: fixed; 
+            bottom: 0; 
+            left: 0; 
+            right: 0; 
+            max-width: 480px; 
+            margin: 0 auto; 
+            background: #ffffff; 
+            display: flex; 
+            justify-content: space-around; 
+            align-items: center; 
+            padding: 6px 10px 8px 10px; 
+            border-top: 1px solid #e2e8f0; 
+            z-index: 1000; 
+            height: 72px; 
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.03);
+        }
+
+        .nav-item { 
+            text-align: center; 
+            cursor: pointer; 
+            font-size: 9px; 
+            flex: 1; 
+            font-weight: 800; 
+            text-decoration: none; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            position: relative;
+            top: -16px; 
+            background: #0284c7; 
+            color: #fff !important; 
+            width: 58px; 
+            height: 58px; 
+            max-width: 58px; 
+            border-radius: 50%; 
+            border: 4px solid #ffffff; 
+            text-transform: uppercase; 
+            transition: all 0.2s ease; 
+            box-shadow: 0 4px 10px rgba(2, 132, 199, 0.3);
+        }
+
+        .nav-item:active { transform: scale(0.95); }
+
+        .nav-item span { 
+            font-size: 9px; 
+            font-weight: 800; 
+            text-transform: uppercase; 
+            margin-top: 2px; 
+        }
+    </style>
+</head>
+<body>
+
+<!-- Android App Style Splash Screen Loader -->
+<div id="splashScreen">
+    <img src="https://i.imgur.com/ZxlegoM.png" alt="Logo" class="splash-logo">
+    <div class="loader-bar"></div>
+</div>
+
+<div class="app-container">
+    <div class="header">
+        <button class="back-btn" onclick="goBack()">←</button>
+        <span class="title-text">Transaction Statement</span>
+        <img src="https://i.imgur.com/ZxlegoM.png" alt="KALYAN Logo" class="header-logo-img">
+    </div>
+
+    <div class="history-list" id="historyList">
+        <div style="text-align:center; padding:40px; color:#64748b; font-size:12px;">Loading transactions...</div>
+    </div>
+
+    <!-- Navigation Dock -->
+    <div class="bottom-nav">
+        <a href="mybids.html" class="nav-item"><span>Passbook</span></a>
+        <a href="mybids.html" class="nav-item"><span>My Bids</span></a>
+        <a href="dashboard.html" class="nav-item nav-item-home"><span>Home</span></a>
+        <a href="funds.html" class="nav-item active"><span>Fund</span></a>
+        <a href="chat.html" class="nav-item"><span>Support</span></a>
+    </div>
+</div>
+
+<script>
+    const firebaseConfig = {
+        apiKey: "AIzaSyBeGpb7V0i5GN1opY9JECHxQIGvHFDPX38",
+        authDomain: "win777-ed482.firebaseapp.com",
+        projectId: "win777-ed482",
+        storageBucket: "win777-ed482.firebasestorage.app",
+        messagingSenderId: "843686112399",
+        appId: "1:843686112399:web:c09703510a09eda3d814fa",
+        measurementId: "G-RD2E88WNXP"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+
+    function hideSplashScreen() {
+        const splash = document.getElementById('splashScreen');
+        if (splash && splash.style.opacity !== '0') {
+            splash.style.opacity = '0';
+            setTimeout(() => {
+                splash.style.visibility = 'hidden';
+            }, 300);
+        }
+    }
+
+    async function loadHistory() {
+        let user = auth.currentUser;
+        if (!user) { window.location.href = 'index.html'; return; }
+
+        let userDoc = await db.collection('users').doc(user.uid).get();
+        if (userDoc.exists && userDoc.data().blocked === true) {
+            alert('🚫 Your account has been blocked by Admin.');
+            await auth.signOut();
+            window.location.href = 'index.html';
+            return;
+        }
+
+        try {
+            let transactionsSnap = await db.collection('transactions').where('userId', '==', user.uid).get();
+            let withdrawalsSnap = await db.collection('withdrawRequests').where('userId', '==', user.uid).get();
+
+            let items = [];
+
+            withdrawalsSnap.forEach(doc => {
+                let w = doc.data();
+                let date = w.date?.toDate ? w.date.toDate() : (w.date?.seconds ? new Date(w.date.seconds * 1000) : new Date(0));
+                items.push({
+                    id: doc.id,
+                    type: 'debit',
+                    category: 'Withdrawal',
+                    amount: w.amount,
+                    status: w.status || 'Pending',
+                    date: date
+                });
+            });
+
+            transactionsSnap.forEach(doc => {
+                let t = doc.data();
+                if (t.type === 'credit') {
+                    let date = t.date?.toDate ? t.date.toDate() : (t.date?.seconds ? new Date(t.date.seconds * 1000) : new Date(0));
+                    items.push({
+                        id: doc.id,
+                        type: 'credit',
+                        category: 'Deposit',
+                        amount: t.amount,
+                        status: t.status || 'Pending',
+                        date: date
+                    });
+                }
+            });
+
+            items.sort((a, b) => b.date - a.date);
+
+            let container = document.getElementById('historyList');
+
+            if (items.length === 0) {
+                container.innerHTML = '<div class="no-data">No transactions found</div>';
+                hideSplashScreen();
+                return;
+            }
+
+            let html = items.map(item => {
+                let isCredit = item.type === 'credit';
+                let statusLower = item.status.toLowerCase();
+                let statusClass = statusLower === 'completed' || statusLower === 'approved' ? 'status-completed' : (statusLower === 'rejected' ? 'status-rejected' : 'status-pending');
+
+                return `
+                    <div class="history-item">
+                        <div class="history-header">
+                            <span class="history-id">REF: #${item.id.substring(0, 10).toUpperCase()}</span>
+                            <span class="history-amount ${isCredit ? 'amount-credit' : 'amount-debit'}">
+                                ${isCredit ? '+' : '-'} ₹${item.amount}
+                            </span>
+                        </div>
+                        <div class="history-row">
+                            <span class="history-type ${isCredit ? 'type-deposit' : 'type-withdraw'}">${item.category}</span>
+                            <span class="status-text ${statusClass}">${item.status}</span>
+                        </div>
+                        <div class="history-date">📅 ${item.date.getTime() > 0 ? item.date.toLocaleString() : 'Pending'}</div>
+                    </div>`;
+            }).join('');
+
+            container.innerHTML = html;
+            hideSplashScreen();
+        } catch (e) {
+            document.getElementById('historyList').innerHTML = `<div class="no-data" style="color:#dc2626;">Error loading statement: ${e.message}</div>`;
+            hideSplashScreen();
+        }
+    }
+
+    function goBack() { window.location.href = 'dashboard.html'; }
+
+    auth.onAuthStateChanged(user => { 
+        if (!user) window.location.href = 'index.html'; 
+        else loadHistory(); 
+    });
+
+    setTimeout(hideSplashScreen, 2500);
+</script>
+</body>
+</html>
