@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>KALYAN PLAY - Official App Download</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", "Roboto", -apple-system, BlinkMacSystemFont, Arial, sans-serif; }
+        
+        body { 
+            background: #0b0f19; 
+            color: #f8fafc; 
+            min-height: 100vh; 
+            display: flex; 
+            justify-content: center; 
+            align-items: flex-start;
+        }
+
+        .play-store-wrapper {
+            max-width: 480px;
+            width: 100%;
+            background: #111827;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            padding-bottom: 50px;
+            box-shadow: 0 0 40px rgba(0,0,0,0.6);
+            border-left: 1px solid #1f2937;
+            border-right: 1px solid #1f2937;
+        }
+
+        /* Top Header Layout */
+        .app-main-header { 
+            display: flex; 
+            align-items: center; 
+            gap: 16px; 
+            margin-bottom: 20px; 
+            margin-top: 10px; 
+            background: #1f2937;
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid #374151;
+        }
+        
+        .play-app-icon { 
+            width: 80px; 
+            height: 80px; 
+            background: #000; 
+            border-radius: 16px; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.2); 
+            flex-shrink: 0; 
+            border: 2px solid #f59e0b;
+        }
+
+        .play-app-icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .app-title-block { display: flex; flex-direction: column; justify-content: center; }
+        .play-app-title { font-size: 24px; font-weight: 700; color: #f59e0b; line-height: 1.2; margin-bottom: 4px; letter-spacing: 0.5px; }
+        .play-developer-team { font-size: 13px; font-weight: 600; color: #10b981; text-decoration: none; margin-bottom: 4px; }
+        .play-verified-badge { font-size: 11.5px; color: #9ca3af; display: flex; align-items: center; gap: 4px; }
+
+        /* Stats Strip */
+        .play-stats-row { display: flex; align-items: center; justify-content: space-between; background: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 10px; margin-bottom: 20px; text-align: center; }
+        .stat-box { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; }
+        .stat-box:not(:last-child)::after { content: ''; position: absolute; right: 0; top: 15%; height: 70%; width: 1px; background: #374151; }
+        .stat-value { font-size: 15px; font-weight: 700; color: #f8fafc; }
+        .stat-label { font-size: 11px; color: #9ca3af; margin-top: 3px; font-weight: 500; }
+
+        /* Winners Marquee */
+        .winners-marquee-ribbon { background: #1f2937; border: 1px solid #374151; border-radius: 10px; height: 38px; display: flex; align-items: center; overflow: hidden; margin-bottom: 20px; }
+        .winners-scroll-track { display: inline-block; white-space: nowrap; padding-left: 100%; animation: scrollWinnersTrack 26s linear infinite; }
+        .winner-pill-node { display: inline-block; font-size: 12px; font-weight: 600; color: #e2e8f0; margin-right: 20px; background: #111827; padding: 4px 12px; border-radius: 20px; border: 1px solid #374151; }
+        .winner-pill-node span { color: #10b981; font-weight: 700; }
+        @keyframes scrollWinnersTrack { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
+
+        /* Install Button */
+        .play-install-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #0b0f19; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); transition: transform 0.2s, opacity 0.2s; }
+        .play-install-btn:active { transform: scale(0.98); opacity: 0.9; }
+        .already-installed-box { display: none; width: 100%; padding: 14px; background: #1f2937; border-radius: 12px; color: #10b981; font-size: 15px; font-weight: 700; text-align: center; margin-bottom: 20px; border: 1px solid #10b981; }
+
+        .play-section-title { font-size: 17px; font-weight: 700; color: #f8fafc; margin-bottom: 12px; margin-top: 10px; display: flex; align-items: center; gap: 8px; }
+
+        /* Game Rates Matrix */
+        .game-rates-matrix-board { background: #1f2937; border: 1px solid #374151; border-radius: 14px; padding: 6px 16px; margin-bottom: 24px; }
+        .rate-matrix-row { display: flex; justify-content: space-between; padding: 11px 0; font-size: 14px; font-weight: 500; color: #d1d5db; }
+        .rate-matrix-row:not(:last-child) { border-bottom: 1px solid #374151; }
+        .rate-multiplier-badge { color: #f59e0b; font-weight: 700; background: rgba(245, 158, 11, 0.1); padding: 2px 8px; border-radius: 6px; }
+
+        .play-app-description-text { font-size: 13.5px; color: #9ca3af; line-height: 1.6; margin-bottom: 24px; background: #1f2937; padding: 16px; border-radius: 12px; border: 1px solid #374151; }
+
+        /* Reviews Dashboard */
+        .reviews-summary-display-box { display: flex; align-items: center; gap: 24px; margin-bottom: 16px; background: #1f2937; padding: 16px; border-radius: 12px; border: 1px solid #374151; }
+        .huge-rating-number { font-size: 42px; font-weight: 700; color: #f59e0b; }
+        .review-stars-static { color: #f59e0b; font-size: 14px; letter-spacing: 2px; margin-top: -2px; }
+        
+        .interactive-user-review-panel { border: 1px solid #374151; background: #1f2937; padding: 16px; border-radius: 12px; margin-bottom: 20px; }
+        .review-input-box { width: 100%; padding: 12px; background: #111827; border: 1px solid #374151; border-radius: 8px; font-size: 13.5px; outline: none; margin-bottom: 10px; resize: none; color: #f8fafc; }
+        .review-input-box:focus { border-color: #f59e0b; }
+        .review-submit-action-btn { background: #f59e0b; color: #0b0f19; border: none; padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; transition: opacity 0.2s; }
+        .review-submit-action-btn:hover { opacity: 0.9; }
+        
+        .static-review-slip { margin-bottom: 16px; border-bottom: 1px solid #374151; padding-bottom: 12px; background: #1f2937; padding: 12px; border-radius: 10px; }
+        .review-user-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
+        .review-user-avatar { width: 28px; height: 28px; background: #f59e0b; color: #0b0f19; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+        .review-user-name { font-size: 13.5px; font-weight: 600; color: #f8fafc; }
+        .review-body-text { font-size: 13px; color: #9ca3af; line-height: 1.5; padding-left: 38px; }
+
+        .play-safety-card { background: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 16px; margin-bottom: 20px; }
+        .safety-row-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
+        .safety-row-item:last-child { margin-bottom: 0; }
+        .safety-icon { font-size: 18px; }
+        .safety-text-block { display: flex; flex-direction: column; }
+        .safety-title { font-size: 13.5px; font-weight: 600; color: #f8fafc; }
+        .safety-desc { font-size: 12px; color: #9ca3af; margin-top: 2px; }
+    </style>
+</head>
+<body>
+
+<div class="play-store-wrapper">
+    
+    <!-- Top App Icon and Title Metadata Frame -->
+    <div class="app-main-header">
+        <div class="play-app-icon">
+            <img src="https://i.imgur.com/MrvuQfc.jpeg" alt="KALYAN PLAY Logo">
+        </div>
+        <div class="app-title-block">
+            <h1 class="play-app-title">KALYAN PLAY</h1>
+            <a href="#" class="play-developer-team">Kalyan Official Gaming</a>
+            <div class="play-verified-badge">
+                <svg style="width:13px; height:13px; fill:#10b981; margin-right:3px;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L11 8l-9 9z"/></svg>
+                Verified • Secure Platform
+            </div>
+        </div>
+    </div>
+
+    <!-- Play Store Core Metrics Data Dashboard -->
+    <div class="play-stats-row">
+        <div class="stat-box"><span class="stat-value">4.9 ★</span><span class="stat-label">25K reviews</span></div>
+        <div class="stat-box"><span class="stat-value">5M+</span><span class="stat-label">Downloads</span></div>
+        <div class="stat-box"><span class="stat-value">18+</span><span class="stat-label">Rated for Adults</span></div>
+    </div>
+
+    <!-- Live Todays Winners Running Marquee Ticker -->
+    <div class="winners-marquee-ribbon">
+        <div class="winners-scroll-track">
+            <div class="winner-pill-node">Amit Sharma: <span>₹50,000 Won</span></div>
+            <div class="winner-pill-node">Rahul Verma: <span>₹35,000 Won</span></div>
+            <div class="winner-pill-node">Vikram Singh: <span>₹1,20,000 Won</span></div>
+            <div class="winner-pill-node">Deepak Kumar: <span>₹25,000 Won</span></div>
+            <div class="winner-pill-node">Sanjay Roy: <span>₹45,000 Won</span></div>
+            <div class="winner-pill-node">Rajesh Patel: <span>₹80,000 Won</span></div>
+        </div>
+    </div>
+
+    <!-- Live GitHub Release Asset Download Anchor Button -->
+    <a href="https://github.com/kalyanplay/kalyan/releases/download/v1.0.0/KalyanPlay.apk" class="play-install-btn" id="downloadActionAnchor" download>📥 Download App Now</a>
+    <div class="already-installed-box" id="alreadyActivePill">✅ App Already Installed</div>
+
+    <!-- Play Payout Rates Sheet Grid Display Box -->
+    <h2 class="play-section-title">⚡ Official Game Rates</h2>
+    <div class="game-rates-matrix-board">
+        <div class="rate-matrix-row"><span>Single Digit</span><span class="rate-multiplier-badge">10x Payout</span></div>
+        <div class="rate-matrix-row"><span>Jodi Game</span><span class="rate-multiplier-badge">100x Payout</span></div>
+        <div class="rate-matrix-row"><span>Single Pana</span><span class="rate-multiplier-badge">160x Payout</span></div>
+        <div class="rate-matrix-row"><span>Double Pana</span><span class="rate-multiplier-badge">320x Payout</span></div>
+        <div class="rate-matrix-row"><span>Triple Pana</span><span class="rate-multiplier-badge">1000x Payout</span></div>
+        <div class="rate-matrix-row"><span>Half Sangam A/B</span><span class="rate-multiplier-badge">1000x Payout</span></div>
+        <div class="rate-matrix-row"><span>Full Sangam</span><span class="rate-multiplier-badge">10000x Payout</span></div>
+    </div>
+
+    <h2 class="play-section-title">ℹ️ About this app</h2>
+    <p class="play-app-description-text">
+        Experience lightning-fast market updates and instant withdrawal clearances inside the official KALYAN PLAY application suite. Engineered with responsive layouts, secure cloud database matching, and 24x7 customer support.
+    </p>
+
+    <!-- Google Play Ratings & Real-Time Review Simulation Engine -->
+    <h2 class="play-section-title">⭐ Ratings and reviews</h2>
+    <div class="reviews-summary-display-box">
+        <div class="huge-rating-number">4.9</div>
+        <div style="display:flex; flex-direction:column; gap:2px;">
+            <div class="review-stars-static">★★★★★</div>
+            <div style="font-size:11.5px; color:#9ca3af;">25,412 total ratings</div>
+        </div>
+    </div>
+
+    <!-- Interactive New Review Gate Panel Section -->
+    <div class="interactive-user-review-panel">
+        <div style="font-size:13.5px; font-weight:600; color:#f8fafc; margin-bottom:8px;">Rate this application</div>
+        <textarea id="userReviewInputField" class="review-input-box" rows="2" placeholder="Describe your experience with Kalyan Play..."></textarea>
+        <button class="review-submit-action-btn" onclick="executeSimulatedReviewSubmission()">Submit Review</button>
+    </div>
+
+    <!-- Static Reviews Feed Listing Area -->
+    <div id="reviewsStreamRootAnchor">
+        <div class="static-review-slip">
+            <div class="review-user-row"><div class="review-user-avatar">R</div><span class="review-user-name">Rakesh Kumar</span></div>
+            <p class="review-body-text">Best and most trusted application! Fast withdrawal directly into bank account within minutes.</p>
+        </div>
+        <div class="static-review-slip">
+            <div class="review-user-row"><div class="review-user-avatar">M</div><span class="review-user-name">Manish Gupta</span></div>
+            <p class="review-body-text">Amazing interface and lightning-fast updates. Highly recommended for everyone!</p>
+        </div>
+    </div>
+
+    <!-- Play Data Safety Declaration Sheet -->
+    <h2 class="play-section-title">🔒 Data safety</h2>
+    <div class="play-safety-card">
+        <div class="safety-row-item">
+            <span class="safety-icon">🛡️</span>
+            <div class="safety-text-block">
+                <span class="safety-title">No data shared with third parties</span>
+                <span class="safety-desc">Your personal profile variables and data remain fully secure and private.</span>
+            </div>
+        </div>
+        <div class="safety-row-item">
+            <span class="safety-icon">🔐</span>
+            <div class="safety-text-block">
+                <span class="safety-title">Data encrypted in transit</span>
+                <span class="safety-desc">All transactions and data transfers are secured via high-grade encryption channels.</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function executeSimulatedReviewSubmission() {
+        const field = document.getElementById('userReviewInputField');
+        const txt = field.value.trim();
+        if(!txt) { alert('Please write a review text before submitting.'); return; }
+        
+        const btn = document.querySelector('.review-submit-action-btn');
+        btn.disabled = true; btn.innerText = 'Submitting...';
+        
+        setTimeout(() => {
+            alert('✅ Review submitted successfully!');
+            field.value = '';
+            btn.disabled = false; btn.innerText = 'Submit Review';
+        }, 1100);
+    }
+
+    const userAgentString = navigator.userAgent || navigator.vendor || window.opera;
+    const isInsideWebViewApp = (userAgentString.includes('wv') || userAgentString.includes('WebView') || userAgentString.includes('Crosswalk'));
+
+    if (isInsideWebViewApp) {
+        document.getElementById('downloadActionAnchor').style.display = 'none';
+        document.getElementById('alreadyActivePill').style.display = 'block';
+    }
+</script>
+</body>
+</html>
