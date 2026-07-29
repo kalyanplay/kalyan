@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>KALYAN PLAY - Official App Download</title>
+    <title>SUPER MATKA - Official App Download</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Poppins", "Roboto", -apple-system, BlinkMacSystemFont, Arial, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Montserrat", "Segoe UI", sans-serif; }
         
         body { 
-            background: #0b0f19; 
-            color: #f8fafc; 
+            background: #0f172a; 
+            color: #f1f5f9; 
             min-height: 100vh; 
             display: flex; 
             justify-content: center; 
@@ -19,14 +19,14 @@
         .play-store-wrapper {
             max-width: 480px;
             width: 100%;
-            background: #111827;
+            background: #1e293b;
             min-height: 100vh;
             padding: 20px;
             position: relative;
             padding-bottom: 50px;
-            box-shadow: 0 0 40px rgba(0,0,0,0.6);
-            border-left: 1px solid #1f2937;
-            border-right: 1px solid #1f2937;
+            box-shadow: 0 0 50px rgba(0,0,0,0.8);
+            border-left: 1px solid #334155;
+            border-right: 1px solid #334155;
         }
 
         /* Top Header Layout */
@@ -36,24 +36,24 @@
             gap: 16px; 
             margin-bottom: 20px; 
             margin-top: 10px; 
-            background: #1f2937;
-            padding: 16px;
-            border-radius: 16px;
-            border: 1px solid #374151;
+            background: #0f172a;
+            padding: 18px;
+            border-radius: 18px;
+            border: 1px solid #334155;
         }
         
         .play-app-icon { 
-            width: 80px; 
-            height: 80px; 
+            width: 82px; 
+            height: 82px; 
             background: #000; 
-            border-radius: 16px; 
+            border-radius: 20px; 
             display: flex; 
             align-items: center; 
             justify-content: center; 
             overflow: hidden;
-            box-shadow: 0 8px 20px rgba(245, 158, 11, 0.2); 
+            box-shadow: 0 10px 25px rgba(99, 102, 241, 0.3); 
             flex-shrink: 0; 
-            border: 2px solid #f59e0b;
+            border: 2px solid #6366f1;
         }
 
         .play-app-icon img {
@@ -63,63 +63,63 @@
         }
         
         .app-title-block { display: flex; flex-direction: column; justify-content: center; }
-        .play-app-title { font-size: 24px; font-weight: 700; color: #f59e0b; line-height: 1.2; margin-bottom: 4px; letter-spacing: 0.5px; }
-        .play-developer-team { font-size: 13px; font-weight: 600; color: #10b981; text-decoration: none; margin-bottom: 4px; }
-        .play-verified-badge { font-size: 11.5px; color: #9ca3af; display: flex; align-items: center; gap: 4px; }
+        .play-app-title { font-size: 23px; font-weight: 800; color: #818cf8; line-height: 1.2; margin-bottom: 4px; letter-spacing: 0.5px; }
+        .play-developer-team { font-size: 13px; font-weight: 600; color: #38bdf8; text-decoration: none; margin-bottom: 4px; }
+        .play-verified-badge { font-size: 11.5px; color: #94a3b8; display: flex; align-items: center; gap: 4px; }
 
         /* Stats Strip */
-        .play-stats-row { display: flex; align-items: center; justify-content: space-between; background: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 14px 10px; margin-bottom: 20px; text-align: center; }
+        .play-stats-row { display: flex; align-items: center; justify-content: space-between; background: #0f172a; border: 1px solid #334155; border-radius: 14px; padding: 14px 10px; margin-bottom: 20px; text-align: center; }
         .stat-box { flex: 1; display: flex; flex-direction: column; align-items: center; position: relative; }
-        .stat-box:not(:last-child)::after { content: ''; position: absolute; right: 0; top: 15%; height: 70%; width: 1px; background: #374151; }
-        .stat-value { font-size: 15px; font-weight: 700; color: #f8fafc; }
-        .stat-label { font-size: 11px; color: #9ca3af; margin-top: 3px; font-weight: 500; }
+        .stat-box:not(:last-child)::after { content: ''; position: absolute; right: 0; top: 15%; height: 70%; width: 1px; background: #334155; }
+        .stat-value { font-size: 16px; font-weight: 700; color: #f8fafc; }
+        .stat-label { font-size: 11px; color: #94a3b8; margin-top: 3px; font-weight: 500; }
 
         /* Winners Marquee */
-        .winners-marquee-ribbon { background: #1f2937; border: 1px solid #374151; border-radius: 10px; height: 38px; display: flex; align-items: center; overflow: hidden; margin-bottom: 20px; }
-        .winners-scroll-track { display: inline-block; white-space: nowrap; padding-left: 100%; animation: scrollWinnersTrack 26s linear infinite; }
-        .winner-pill-node { display: inline-block; font-size: 12px; font-weight: 600; color: #e2e8f0; margin-right: 20px; background: #111827; padding: 4px 12px; border-radius: 20px; border: 1px solid #374151; }
-        .winner-pill-node span { color: #10b981; font-weight: 700; }
+        .winners-marquee-ribbon { background: #0f172a; border: 1px solid #334155; border-radius: 12px; height: 38px; display: flex; align-items: center; overflow: hidden; margin-bottom: 20px; }
+        .winners-scroll-track { display: inline-block; white-space: nowrap; padding-left: 100%; animation: scrollWinnersTrack 28s linear infinite; }
+        .winner-pill-node { display: inline-block; font-size: 12px; font-weight: 600; color: #cbd5e1; margin-right: 20px; background: #1e293b; padding: 4px 14px; border-radius: 20px; border: 1px solid #334155; }
+        .winner-pill-node span { color: #38bdf8; font-weight: 700; }
         @keyframes scrollWinnersTrack { 0% { transform: translate3d(0, 0, 0); } 100% { transform: translate3d(-100%, 0, 0); } }
 
         /* Install Button */
-        .play-install-btn { width: 100%; padding: 14px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: #0b0f19; border: none; border-radius: 12px; font-size: 16px; font-weight: 700; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 4px 15px rgba(245, 158, 11, 0.4); transition: transform 0.2s, opacity 0.2s; }
+        .play-install-btn { width: 100%; padding: 15px; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); color: #ffffff; border: none; border-radius: 14px; font-size: 16px; font-weight: 700; cursor: pointer; text-decoration: none; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4); transition: transform 0.2s, opacity 0.2s; }
         .play-install-btn:active { transform: scale(0.98); opacity: 0.9; }
-        .already-installed-box { display: none; width: 100%; padding: 14px; background: #1f2937; border-radius: 12px; color: #10b981; font-size: 15px; font-weight: 700; text-align: center; margin-bottom: 20px; border: 1px solid #10b981; }
+        .already-installed-box { display: none; width: 100%; padding: 15px; background: #0f172a; border-radius: 14px; color: #38bdf8; font-size: 15px; font-weight: 700; text-align: center; margin-bottom: 20px; border: 1px solid #38bdf8; }
 
         .play-section-title { font-size: 17px; font-weight: 700; color: #f8fafc; margin-bottom: 12px; margin-top: 10px; display: flex; align-items: center; gap: 8px; }
 
         /* Game Rates Matrix */
-        .game-rates-matrix-board { background: #1f2937; border: 1px solid #374151; border-radius: 14px; padding: 6px 16px; margin-bottom: 24px; }
-        .rate-matrix-row { display: flex; justify-content: space-between; padding: 11px 0; font-size: 14px; font-weight: 500; color: #d1d5db; }
-        .rate-matrix-row:not(:last-child) { border-bottom: 1px solid #374151; }
-        .rate-multiplier-badge { color: #f59e0b; font-weight: 700; background: rgba(245, 158, 11, 0.1); padding: 2px 8px; border-radius: 6px; }
+        .game-rates-matrix-board { background: #0f172a; border: 1px solid #334155; border-radius: 16px; padding: 6px 16px; margin-bottom: 24px; }
+        .rate-matrix-row { display: flex; justify-content: space-between; padding: 12px 0; font-size: 14px; font-weight: 500; color: #cbd5e1; }
+        .rate-matrix-row:not(:last-child) { border-bottom: 1px solid #334155; }
+        .rate-multiplier-badge { color: #818cf8; font-weight: 700; background: rgba(129, 140, 248, 0.1); padding: 2px 8px; border-radius: 6px; }
 
-        .play-app-description-text { font-size: 13.5px; color: #9ca3af; line-height: 1.6; margin-bottom: 24px; background: #1f2937; padding: 16px; border-radius: 12px; border: 1px solid #374151; }
+        .play-app-description-text { font-size: 13.5px; color: #94a3b8; line-height: 1.6; margin-bottom: 24px; background: #0f172a; padding: 16px; border-radius: 14px; border: 1px solid #334155; }
 
         /* Reviews Dashboard */
-        .reviews-summary-display-box { display: flex; align-items: center; gap: 24px; margin-bottom: 16px; background: #1f2937; padding: 16px; border-radius: 12px; border: 1px solid #374151; }
-        .huge-rating-number { font-size: 42px; font-weight: 700; color: #f59e0b; }
-        .review-stars-static { color: #f59e0b; font-size: 14px; letter-spacing: 2px; margin-top: -2px; }
+        .reviews-summary-display-box { display: flex; align-items: center; gap: 24px; margin-bottom: 16px; background: #0f172a; padding: 16px; border-radius: 14px; border: 1px solid #334155; }
+        .huge-rating-number { font-size: 42px; font-weight: 700; color: #818cf8; }
+        .review-stars-static { color: #6366f1; font-size: 14px; letter-spacing: 2px; margin-top: -2px; }
         
-        .interactive-user-review-panel { border: 1px solid #374151; background: #1f2937; padding: 16px; border-radius: 12px; margin-bottom: 20px; }
-        .review-input-box { width: 100%; padding: 12px; background: #111827; border: 1px solid #374151; border-radius: 8px; font-size: 13.5px; outline: none; margin-bottom: 10px; resize: none; color: #f8fafc; }
-        .review-input-box:focus { border-color: #f59e0b; }
-        .review-submit-action-btn { background: #f59e0b; color: #0b0f19; border: none; padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; transition: opacity 0.2s; }
+        .interactive-user-review-panel { border: 1px solid #334155; background: #0f172a; padding: 16px; border-radius: 14px; margin-bottom: 20px; }
+        .review-input-box { width: 100%; padding: 12px; background: #1e293b; border: 1px solid #334155; border-radius: 8px; font-size: 13.5px; outline: none; margin-bottom: 10px; resize: none; color: #f8fafc; }
+        .review-input-box:focus { border-color: #6366f1; }
+        .review-submit-action-btn { background: #6366f1; color: #fff; border: none; padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 700; cursor: pointer; transition: opacity 0.2s; }
         .review-submit-action-btn:hover { opacity: 0.9; }
         
-        .static-review-slip { margin-bottom: 16px; border-bottom: 1px solid #374151; padding-bottom: 12px; background: #1f2937; padding: 12px; border-radius: 10px; }
+        .static-review-slip { margin-bottom: 16px; border-bottom: 1px solid #334155; padding-bottom: 12px; background: #0f172a; padding: 12px; border-radius: 12px; }
         .review-user-row { display: flex; align-items: center; gap: 10px; margin-bottom: 6px; }
-        .review-user-avatar { width: 28px; height: 28px; background: #f59e0b; color: #0b0f19; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+        .review-user-avatar { width: 28px; height: 28px; background: #38bdf8; color: #0f172a; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
         .review-user-name { font-size: 13.5px; font-weight: 600; color: #f8fafc; }
-        .review-body-text { font-size: 13px; color: #9ca3af; line-height: 1.5; padding-left: 38px; }
+        .review-body-text { font-size: 13px; color: #94a3b8; line-height: 1.5; padding-left: 38px; }
 
-        .play-safety-card { background: #1f2937; border: 1px solid #374151; border-radius: 12px; padding: 16px; margin-bottom: 20px; }
+        .play-safety-card { background: #0f172a; border: 1px solid #334155; border-radius: 14px; padding: 16px; margin-bottom: 20px; }
         .safety-row-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 14px; }
         .safety-row-item:last-child { margin-bottom: 0; }
         .safety-icon { font-size: 18px; }
         .safety-text-block { display: flex; flex-direction: column; }
         .safety-title { font-size: 13.5px; font-weight: 600; color: #f8fafc; }
-        .safety-desc { font-size: 12px; color: #9ca3af; margin-top: 2px; }
+        .safety-desc { font-size: 12px; color: #94a3b8; margin-top: 2px; }
     </style>
 </head>
 <body>
@@ -129,39 +129,39 @@
     <!-- Top App Icon and Title Metadata Frame -->
     <div class="app-main-header">
         <div class="play-app-icon">
-            <img src="https://i.imgur.com/MrvuQfc.jpeg" alt="KALYAN PLAY Logo">
+            <img src="https://i.imgur.com/MrvuQfc.jpeg" alt="SUPER MATKA Logo">
         </div>
         <div class="app-title-block">
-            <h1 class="play-app-title">KALYAN PLAY</h1>
-            <a href="#" class="play-developer-team">Kalyan Official Gaming</a>
+            <h1 class="play-app-title">SUPER MATKA</h1>
+            <a href="#" class="play-developer-team">Super Gaming Hub</a>
             <div class="play-verified-badge">
-                <svg style="width:13px; height:13px; fill:#10b981; margin-right:3px;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L11 8l-9 9z"/></svg>
-                Verified • Secure Platform
+                <svg style="width:13px; height:13px; fill:#38bdf8; margin-right:3px;" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L11 8l-9 9z"/></svg>
+                Verified • Trusted App
             </div>
         </div>
     </div>
 
     <!-- Play Store Core Metrics Data Dashboard -->
     <div class="play-stats-row">
-        <div class="stat-box"><span class="stat-value">4.9 ★</span><span class="stat-label">25K reviews</span></div>
-        <div class="stat-box"><span class="stat-value">5M+</span><span class="stat-label">Downloads</span></div>
+        <div class="stat-box"><span class="stat-value">4.8 ★</span><span class="stat-label">32K reviews</span></div>
+        <div class="stat-box"><span class="stat-value">10M+</span><span class="stat-label">Downloads</span></div>
         <div class="stat-box"><span class="stat-value">18+</span><span class="stat-label">Rated for Adults</span></div>
     </div>
 
     <!-- Live Todays Winners Running Marquee Ticker -->
     <div class="winners-marquee-ribbon">
         <div class="winners-scroll-track">
-            <div class="winner-pill-node">Amit Sharma: <span>₹50,000 Won</span></div>
-            <div class="winner-pill-node">Rahul Verma: <span>₹35,000 Won</span></div>
-            <div class="winner-pill-node">Vikram Singh: <span>₹1,20,000 Won</span></div>
-            <div class="winner-pill-node">Deepak Kumar: <span>₹25,000 Won</span></div>
-            <div class="winner-pill-node">Sanjay Roy: <span>₹45,000 Won</span></div>
-            <div class="winner-pill-node">Rajesh Patel: <span>₹80,000 Won</span></div>
+            <div class="winner-pill-node">Sameer Khan: <span>₹65,000 Won</span></div>
+            <div class="winner-pill-node">Faizan Ali: <span>₹40,500 Won</span></div>
+            <div class="winner-pill-node">Santosh Pawar: <span>₹1,50,000 Won</span></div>
+            <div class="winner-pill-node">Suresh Nair: <span>₹30,000 Won</span></div>
+            <div class="winner-pill-node">Akash Gupta: <span>₹55,000 Won</span></div>
+            <div class="winner-pill-node">Imran Shaikh: <span>₹95,000 Won</span></div>
         </div>
     </div>
 
     <!-- Live GitHub Release Asset Download Anchor Button -->
-    <a href="https://github.com/kalyanplay/kalyan/releases/download/v1.0.0/KalyanPlay.apk" class="play-install-btn" id="downloadActionAnchor" download>📥 Download App Now</a>
+    <a href="https://github.com/kalyanplay/kalyan/releases/download/v1.0.0/KalyanPlay.apk" class="play-install-btn" id="downloadActionAnchor" download>📥 Download Super Matka APK</a>
     <div class="already-installed-box" id="alreadyActivePill">✅ App Already Installed</div>
 
     <!-- Play Payout Rates Sheet Grid Display Box -->
@@ -178,35 +178,35 @@
 
     <h2 class="play-section-title">ℹ️ About this app</h2>
     <p class="play-app-description-text">
-        Experience lightning-fast market updates and instant withdrawal clearances inside the official KALYAN PLAY application suite. Engineered with responsive layouts, secure cloud database matching, and 24x7 customer support.
+        Welcome to SUPER MATKA, the ultimate destination for fast market updates, live charts, and lightning-fast secure payouts. Designed with high-performance architecture and smooth user experience.
     </p>
 
     <!-- Google Play Ratings & Real-Time Review Simulation Engine -->
     <h2 class="play-section-title">⭐ Ratings and reviews</h2>
     <div class="reviews-summary-display-box">
-        <div class="huge-rating-number">4.9</div>
+        <div class="huge-rating-number">4.8</div>
         <div style="display:flex; flex-direction:column; gap:2px;">
             <div class="review-stars-static">★★★★★</div>
-            <div style="font-size:11.5px; color:#9ca3af;">25,412 total ratings</div>
+            <div style="font-size:11.5px; color:#94a3b8;">32,150 total ratings</div>
         </div>
     </div>
 
     <!-- Interactive New Review Gate Panel Section -->
     <div class="interactive-user-review-panel">
         <div style="font-size:13.5px; font-weight:600; color:#f8fafc; margin-bottom:8px;">Rate this application</div>
-        <textarea id="userReviewInputField" class="review-input-box" rows="2" placeholder="Describe your experience with Kalyan Play..."></textarea>
+        <textarea id="userReviewInputField" class="review-input-box" rows="2" placeholder="Describe your experience with Super Matka..."></textarea>
         <button class="review-submit-action-btn" onclick="executeSimulatedReviewSubmission()">Submit Review</button>
     </div>
 
     <!-- Static Reviews Feed Listing Area -->
     <div id="reviewsStreamRootAnchor">
         <div class="static-review-slip">
-            <div class="review-user-row"><div class="review-user-avatar">R</div><span class="review-user-name">Rakesh Kumar</span></div>
-            <p class="review-body-text">Best and most trusted application! Fast withdrawal directly into bank account within minutes.</p>
+            <div class="review-user-row"><div class="review-user-avatar">S</div><span class="review-user-name">Sunil Sharma</span></div>
+            <p class="review-body-text">Extremely fast withdrawals and genuine platform. Great UI design!</p>
         </div>
         <div class="static-review-slip">
-            <div class="review-user-row"><div class="review-user-avatar">M</div><span class="review-user-name">Manish Gupta</span></div>
-            <p class="review-body-text">Amazing interface and lightning-fast updates. Highly recommended for everyone!</p>
+            <div class="review-user-row"><div class="review-user-avatar">V</div><span class="review-user-name">Vishal Mehra</span></div>
+            <p class="review-body-text">Super smooth app performance. Very happy with the market charts and support.</p>
         </div>
     </div>
 
@@ -217,14 +217,14 @@
             <span class="safety-icon">🛡️</span>
             <div class="safety-text-block">
                 <span class="safety-title">No data shared with third parties</span>
-                <span class="safety-desc">Your personal profile variables and data remain fully secure and private.</span>
+                <span class="safety-desc">Your personal account details remain completely protected and confidential.</span>
             </div>
         </div>
         <div class="safety-row-item">
             <span class="safety-icon">🔐</span>
             <div class="safety-text-block">
                 <span class="safety-title">Data encrypted in transit</span>
-                <span class="safety-desc">All transactions and data transfers are secured via high-grade encryption channels.</span>
+                <span class="safety-desc">All user data and requests are securely processed over robust encryption protocols.</span>
             </div>
         </div>
     </div>
